@@ -7,6 +7,10 @@ public class CharacterController : MonoBehaviour {
     [HideInInspector]public bool 
 		facingRight = true,
 		grounded = false;
+
+	public int 
+		health,
+		maxHealth;
 		
     public float 
 		maxspeed = 3,
@@ -28,8 +32,9 @@ public class CharacterController : MonoBehaviour {
 	private Rigidbody2D playerRigidbody;
     private Animator anim;
 
-	void Start () {
-
+	void Start () 
+	{
+		health = maxHealth;
         playerRigidbody = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();
 		activeShots[0] = true;
