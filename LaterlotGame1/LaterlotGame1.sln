@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{8BF1341F-CD55-B189-E562-F9DB842863C0}") = "LaterlotGame1", "Assembly-CSharp.csproj", "{8F8072BE-3DD8-0E3F-CD94-8E53552AC738}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8F8072BE-3DD8-0E3F-CD94-8E53552AC738}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F8072BE-3DD8-0E3F-CD94-8E53552AC738}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F8072BE-3DD8-0E3F-CD94-8E53552AC738}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F8072BE-3DD8-0E3F-CD94-8E53552AC738}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
