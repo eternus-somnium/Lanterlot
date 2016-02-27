@@ -31,12 +31,14 @@ public class CharacterController : MonoBehaviour {
 
 	private Rigidbody2D playerRigidbody;
     private Animator anim;
+	private AudioSource playerNoise;
 
 	void Start () 
 	{
 		health = maxHealth;
-        playerRigidbody = gameObject.GetComponent<Rigidbody2D>();
-        anim = gameObject.GetComponent<Animator>();
+        playerRigidbody = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+		playerNoise = GetComponent<AudioSource>();
 		activeShots[0] = true;
 
 	}
@@ -101,6 +103,7 @@ public class CharacterController : MonoBehaviour {
 
 		if(Input.GetAxis("Fire1") != 0 && cooldown == 0)
 		{
+			playerNoise.Play();
 			cooldown = maxCooldown;
 			for(i=0;i<activeShots.Length;i++)
 			{
