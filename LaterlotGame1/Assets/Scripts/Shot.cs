@@ -21,8 +21,10 @@ public class Shot : MonoBehaviour
 			Destroy(this.transform.root.gameObject);
 	}
 
-	void OnCollisionEnter2D()
+	void OnCollisionEnter2D(Collision2D c)
 	{
+		if(c.gameObject.tag == "Enemy")
+			c.gameObject.GetComponent<Enemy>().health--;
 		if(destroyOnContact) Destroy(this.transform.root.gameObject);
 	}
 }

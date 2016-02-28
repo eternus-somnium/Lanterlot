@@ -103,8 +103,11 @@ public class CharacterController : MonoBehaviour {
 
 		if(Input.GetAxis("Fire1") != 0 && cooldown == 0)
 		{
-			playerNoises[0].Play();
+			playerNoises[2].Play();
+			if(activeShots[3]) playerNoises[3].Play();
+
 			cooldown = maxCooldown;
+
 			for(i=0;i<activeShots.Length;i++)
 			{
 				if(activeShots[i])
