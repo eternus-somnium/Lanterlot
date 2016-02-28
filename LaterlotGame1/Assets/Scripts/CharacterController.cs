@@ -13,14 +13,18 @@ public class CharacterController : MonoBehaviour {
 
 	public int 
 		health,
-		maxHealth;
+		maxHealth,
+		energy,
+		maxEnergy,
+		bombs,
+		maxBombs;
 		
     public float 
 		maxspeed = 3,
-		speed = 50f,
+		speed = 50,
 		currentJumpCounter = 0,
 		maxJumpCounter = 1,
-		jumpPower = 150f,
+		jumpPower = 500,
 		aimSensitivity,
 		cooldown = 0,
 		maxCooldown = .05f;
@@ -31,7 +35,8 @@ public class CharacterController : MonoBehaviour {
     public Transform groundCheck;
 
 	public GameObject 
-		shot;
+		shot,
+		UI;
 
 	private Rigidbody2D playerRigidbody;
     private Animator anim;
@@ -44,6 +49,7 @@ public class CharacterController : MonoBehaviour {
         anim = GetComponent<Animator>();
 		playerNoises = GetComponents<AudioSource>();
 		activeShots[0] = true;
+		UI = GameObject.Find("Canvas");
 	}
 	
 	
@@ -75,29 +81,35 @@ public class CharacterController : MonoBehaviour {
 	void moveController()
 	{
 		float h = Input.GetAxis("Horizontal");
-
+		//Starting jump charge
 		if (Input.GetButtonDown("Jump") && grounded)
 		{
 			playerNoises[0].Pause();
 			charging = true;
 			h = 0;
 		}
+		//Activating jump
 		else if(Input.GetButtonUp("Jump") && grounded && currentJumpCounter > 0)
 		{
 			jump(currentJumpCounter * jumpPower);
 			currentJumpCounter = 0;
 			charging = false;
 		}
+		//Charging jump
 		else if(charging) 
 			currentJumpCounter = Mathf.Min(currentJumpCounter + Time.deltaTime, maxJumpCounter);
 
-		playerNoises[0].Play();
+		//Playing walking sounds
+		if(h != 0)
+			playerNoises[0].Play();
+		
 		if (h * playerRigidbody.velocity.x < maxspeed)
 			playerRigidbody.AddForce(Vector2.right * h * speed);
 
 		if (Mathf.Abs(playerRigidbody.velocity.x) > maxspeed)
 			playerRigidbody.velocity = new Vector2(Mathf.Sign(playerRigidbody.velocity.x) * maxspeed, playerRigidbody.velocity.y);
 
+		//Turn character around
 		if (h > 0 && !facingRight || h < 0 && facingRight)
 			Flip();
 	}
@@ -110,10 +122,15 @@ public class CharacterController : MonoBehaviour {
 		GameObject lantern = GameObject.Find("Lantern");
 		lantern.transform.rotation = Quaternion.identity;
 
+		//Activate shots based on energy level
+		activeShots[1] = energy > 33;
+		activeShots[2] = energy > 66;
+
+
+
 		if(Input.GetAxis("Fire1") != 0 && cooldown == 0)
 		{
 			playerNoises[2].Play();
-			if(activeShots[3]) playerNoises[3].Play();
 
 			cooldown = maxCooldown;
 
@@ -122,6 +139,15 @@ public class CharacterController : MonoBehaviour {
 				if(activeShots[i])
 					Instantiate(shots[i], lantern.transform.position, Quaternion.Inverse(lanternCircle.transform.rotation));
 			}
+		}
+		else if(Input.GetAxis("Fire2") != 0 && bombs > 0 && cooldown == 0)
+		{
+			playerNoises[3].Play();
+			bombs--;
+	
+			cooldown = maxCooldown;
+
+			Instantiate(shots[3], lantern.transform.position, Quaternion.Inverse(lanternCircle.transform.rotation));
 		}
 		else
 			cooldown = Mathf.Max(0, cooldown - Time.deltaTime);

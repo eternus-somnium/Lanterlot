@@ -3,9 +3,10 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour 
 {
-	public GameObject[] targets;
-	public Vector3
-		dir;
+	public GameObject[] 
+		targets,
+		treasures;
+	public Vector3 dir;
 
 	public Animator anim;
 
@@ -13,7 +14,8 @@ public class Enemy : MonoBehaviour
 		health,
 		maxHealth,
 		moveSpeed,
-		targetID = 0;
+		targetID,
+		treasureID;
 
 	public bool 
 		facingRight,
@@ -24,6 +26,12 @@ public class Enemy : MonoBehaviour
 	{
 		anim = GetComponent<Animator>();
 		health = maxHealth;
+
+		//Set treasure type;
+		int i = Random.Range(1,100);
+		if(i<76) treasureID = 1;
+		else if (i<96) treasureID = 0;
+		else treasureID = 2;
 
 
 	}
@@ -62,6 +70,7 @@ public class Enemy : MonoBehaviour
 	{
 		//Do stuff
 		anim.SetBool("Die",true);
+		Instantiate(treasures[treasureID],transform.position,Quaternion.identity);
 		Invoke("DestroyEnemy", 1);
 
 	}

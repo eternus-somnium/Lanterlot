@@ -52,6 +52,7 @@
      <Compile Include="Assets\Scripts\Ghost.cs" />
      <Compile Include="Assets\Scripts\Shot.cs" />
      <Compile Include="Assets\Scripts\ShotContainer.cs" />
+     <Compile Include="Assets\Scripts\Treasure.cs" />
      <Compile Include="Assets\Scripts\UIController.cs" />
      <Compile Include="Assets\Scripts\Zambie.cs" />
      <Compile Include="Assets\Scripts\enemyAi.cs" />
