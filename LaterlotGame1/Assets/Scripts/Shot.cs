@@ -5,8 +5,11 @@ public class Shot : MonoBehaviour
 {
 
 	public float speed;
-	public bool destroyOnContact = true;
+	public int damage;
+	public bool 
+		destroyOnContact = true;
 	GameObject player;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -18,13 +21,16 @@ public class Shot : MonoBehaviour
 	{
 		transform.Translate(Vector3.right * speed * Time.deltaTime);
 		if(Vector2.Distance(gameObject.transform.position, player.transform.position) > 20)
-			Destroy(this.transform.root.gameObject);
+			Destroy(this.gameObject);
 	}
 
 	void OnCollisionEnter2D(Collision2D c)
 	{
-		if(c.gameObject.tag == "Enemy")
-			c.gameObject.GetComponent<Enemy>().health--;
-		if(destroyOnContact) Destroy(this.transform.root.gameObject);
+		if((gameObject.layer == 9 || gameObject.layer == 10) && c.gameObject.tag == "Enemy")
+			c.gameObject.GetComponent<Enemy>().health -= damage;
+		else if(gameObject.layer == 12 && c.gameObject.tag == "Player")
+			c.gameObject.GetComponent<CharacterController>().health -= damage;
+		
+		if(destroyOnContact) Destroy(this.gameObject);
 	}
 }

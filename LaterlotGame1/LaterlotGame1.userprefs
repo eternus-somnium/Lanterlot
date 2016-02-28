@@ -1,0 +1,19 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Ghost.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Shot.cs" Line="29" Column="7" />
+      <File FileName="Assets\Scripts\EnemySpawner.cs" Line="31" Column="2" />
+      <File FileName="Assets\Scripts\CharacterController.cs" Line="77" Column="28" />
+      <File FileName="Assets\Scripts\Bomb.cs" Line="15" Column="88" />
+      <File FileName="Assets\Scripts\Enemy.cs" Line="58" Column="27" />
+      <File FileName="Assets\Scripts\Zambie.cs" Line="10" Column="32" />
+      <File FileName="Assets\Scripts\ShotContainer.cs" Line="15" Column="24" />
+      <File FileName="Assets\Scripts\Ghost.cs" Line="37" Column="7" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

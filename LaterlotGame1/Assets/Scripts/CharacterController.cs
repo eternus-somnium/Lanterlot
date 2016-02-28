@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class CharacterController : MonoBehaviour {
 
 
     [HideInInspector]public bool 
 		facingRight = true,
-		grounded = false;
+		grounded = false,
+		charging = false,
+		dying = false;
 
 	public int 
 		health,
@@ -27,7 +30,8 @@ public class CharacterController : MonoBehaviour {
 
     public Transform groundCheck;
 
-	public GameObject shot;
+	public GameObject 
+		shot;
 
 	private Rigidbody2D playerRigidbody;
     private Animator anim;
@@ -40,28 +44,28 @@ public class CharacterController : MonoBehaviour {
         anim = GetComponent<Animator>();
 		playerNoises = GetComponents<AudioSource>();
 		activeShots[0] = true;
-
 	}
 	
 	
 	void Update () 
 	{
-
         grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
 
+		if(!dying)
+		{
+			anim.SetBool("Grounded", grounded);
+			anim.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
+
+
+			moveController();
+			weaponController();
+			if(health <= 0)
+			{
+				dying = true;
+				deathController();
+			}
+		}
 	}
-
-
-    void FixedUpdate()
-    {
-        anim.SetBool("Grounded", grounded);
-        anim.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
-
-
-		moveController();
-		weaponController();
-
-    }
 
 	void jump(float currentJumpPower)
 	{
@@ -72,17 +76,22 @@ public class CharacterController : MonoBehaviour {
 	{
 		float h = Input.GetAxis("Horizontal");
 
-		if (Input.GetButton("Jump") && grounded && currentJumpCounter < maxJumpCounter)
+		if (Input.GetButtonDown("Jump") && grounded)
 		{
-			currentJumpCounter += Time.deltaTime;
+			playerNoises[0].Pause();
+			charging = true;
 			h = 0;
 		}
-		else if(grounded && currentJumpCounter > 0)
+		else if(Input.GetButtonUp("Jump") && grounded && currentJumpCounter > 0)
 		{
 			jump(currentJumpCounter * jumpPower);
 			currentJumpCounter = 0;
+			charging = false;
 		}
+		else if(charging) 
+			currentJumpCounter = Mathf.Min(currentJumpCounter + Time.deltaTime, maxJumpCounter);
 
+		playerNoises[0].Play();
 		if (h * playerRigidbody.velocity.x < maxspeed)
 			playerRigidbody.AddForce(Vector2.right * h * speed);
 
@@ -116,6 +125,11 @@ public class CharacterController : MonoBehaviour {
 		}
 		else
 			cooldown = Mathf.Max(0, cooldown - Time.deltaTime);
+	}
+
+	void deathController()
+	{
+		anim.SetBool("Die",true);
 	}
 		
     void Flip()

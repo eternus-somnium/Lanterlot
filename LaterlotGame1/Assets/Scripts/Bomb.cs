@@ -12,7 +12,7 @@ public class Bomb : MonoBehaviour {
 	void Update () 
 	{
 		gameObject.transform.Rotate(new Vector3(0,0,Time.deltaTime * 360));
-		gameObject.transform.localScale += new Vector3(Time.deltaTime *10, Time.deltaTime *10, 0);
+		gameObject.transform.localScale += new Vector3(Time.deltaTime *15, Time.deltaTime *15, 0);
 		if(transform.localScale.x > 40)
 			Destroy(this.gameObject);
 	}
